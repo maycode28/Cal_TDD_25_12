@@ -5,28 +5,31 @@ public class Calc {
 
         boolean needToPlus = exp.contains("+");
         boolean needToMinus = exp.contains("-");
-
+        int result = 0;
         String[] bits = null;
+        bits = exp.split(" ");
 
-        if (needToPlus) {
-            bits = exp.split(" \\+ ");
-        } else if (needToMinus) {
-            bits = exp.split(" - ");
-        }
 
         int [] ints = new int [bits.length];
-        for (int i = 0; i < ints.length; i++) {
+        for (int i = 0; i < ints.length; i+=2) {
             ints[i] = Integer.parseInt(bits[i]);
+        }
+        if (needToMinus){
+            result = ints[0] - ints[2];
         }
 
         if (needToPlus) {
-            int result = 0;
-            for (int i = 0; i < ints.length; i++) {
-                result += ints[i];
+            if(bits[1].equals("-")){
+                result += ints[4];
+            }
+            else {
+                for (int i = 0; i < ints.length; i+=2) {
+                    result += ints[i];
+                }
             }
             return result;
         } else if (needToMinus) {
-            return ints[0] - ints[1];
+            return ints[0] - ints[2];
         }
 
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
