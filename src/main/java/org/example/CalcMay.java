@@ -6,6 +6,7 @@ import java.util.List;
 public class CalcMay {
     public static int run(String exp) {
 
+        exp = exp.replaceAll("- ", "+ -");
         String[] bits = null;
         bits = exp.split(" ");
         List bitsList = new ArrayList();
@@ -16,32 +17,26 @@ public class CalcMay {
 
 
         int result = 0;
-
-        for (int i = 1; i < bitsList.size(); i+=2) {
-            if(bitsList.get(i).equals("*")) {
-                result = (int)bitsList.get(i-1)*(int)bitsList.get(i+1);
-                bitsList.set(i-1, result);
-                bitsList.remove(i);
-                bitsList.remove(i);
+        while (bitsList.contains("*")) {
+            for (int i = 1; i < bitsList.size(); i+=2) {
+                if(bitsList.get(i).equals("*")) {
+                    result = (int)bitsList.get(i-1)*(int)bitsList.get(i+1);
+                    bitsList.set(i-1, result);
+                    bitsList.remove(i);
+                    bitsList.remove(i);
+                    break;
+                }
             }
         }
-        for (int i = 1; i < bitsList.size(); i+=2) {
-            if(bitsList.get(i).equals("+")) {
-                result = (int)bitsList.get(i-1)+(int)bitsList.get(i+1);
-                bitsList.set(i-1, result);
-                bitsList.remove(i);
-                bitsList.remove(i);
-            }
-        }
-        for (int i = 1; i < bitsList.size(); i+=2) {
-            if(bitsList.get(i).equals("-")) {
-                result = (int)bitsList.get(i-1)-(int)bitsList.get(i+1);
-                bitsList.set(i-1, result);
-                bitsList.remove(i);
-                bitsList.remove(i);
-            }
-            else{
-                throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
+        while (bitsList.contains("+")) {
+            for (int i = 1; i < bitsList.size(); i+=2) {
+                if(bitsList.get(i).equals("+")) {
+                    result = (int)bitsList.get(i-1)+(int)bitsList.get(i+1);
+                    bitsList.set(i-1, result);
+                    bitsList.remove(i);
+                    bitsList.remove(i);
+                    break;
+                }
             }
         }
 
