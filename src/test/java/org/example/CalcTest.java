@@ -29,4 +29,16 @@ public class CalcTest {
     public void test4() {
         assertThat(Calc.run("1000 + 200")).isEqualTo(1200);
     }
+
+    @Test
+    @DisplayName("50 - 30 = 20")
+    public void test5() {
+        assertThat(Calc.run("50 - 30")).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("1500 - 1000 = 500")
+    public void test6() {
+        assertThat(Calc.run("1500 - 1000")).isEqualTo(500);
+    }
 }
