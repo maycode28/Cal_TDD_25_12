@@ -41,4 +41,10 @@ public class CalcTest {
     public void test6() {
         assertThat(Calc.run("1500 - 1000")).isEqualTo(500);
     }
+
+    @Test
+    @DisplayName("10 + 20 + 30 = 60")
+    public void test7() {
+        assertThat(Calc.run("10 + 20 + 30")).isEqualTo(60);
+    }
 }
