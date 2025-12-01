@@ -1,23 +1,51 @@
 package org.example;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CalcMay {
-    public static int run (String exp){
-        if (exp.contains("+")){
-            String[] bits = exp.split(" \\+ ");
-            //String[] bits = exp.split("\\+").trim();현재로선 안 됨 trim 은 string의 공백을 제거해주는데 얜 String[]이니까
-            int a = Integer.parseInt(bits[0]);
-            int b = Integer.parseInt(bits[1]);
+    public static int run(String exp) {
 
-            return a+b;
+        String[] bits = null;
+        bits = exp.split(" ");
+        List bitsList = new ArrayList();
+        bitsList.addAll(Arrays.asList(bits));
+        for (int i = 0; i < bitsList.size(); i+=2) {
+            bitsList.set(i,Integer.parseInt(bitsList.get(i).toString()));
         }
-        else if (exp.contains("-")){
-            String[] bits = exp.split(" - ");
-            int a = Integer.parseInt(bits[0]);
-            int b = Integer.parseInt(bits[1]);
 
-            return a-b;
 
+        int result = 0;
+
+        for (int i = 1; i < bitsList.size(); i+=2) {
+            if(bitsList.get(i).equals("*")) {
+                result = (int)bitsList.get(i-1)*(int)bitsList.get(i+1);
+                bitsList.set(i-1, result);
+                bitsList.remove(i);
+                bitsList.remove(i);
+            }
         }
-        return 0;
+        for (int i = 1; i < bitsList.size(); i+=2) {
+            if(bitsList.get(i).equals("+")) {
+                result = (int)bitsList.get(i-1)+(int)bitsList.get(i+1);
+                bitsList.set(i-1, result);
+                bitsList.remove(i);
+                bitsList.remove(i);
+            }
+        }
+        for (int i = 1; i < bitsList.size(); i+=2) {
+            if(bitsList.get(i).equals("-")) {
+                result = (int)bitsList.get(i-1)-(int)bitsList.get(i+1);
+                bitsList.set(i-1, result);
+                bitsList.remove(i);
+                bitsList.remove(i);
+            }
+            else{
+                throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
+            }
+        }
+
+        return result;
     }
+
 }
