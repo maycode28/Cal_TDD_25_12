@@ -3,8 +3,6 @@ package org.example;
 public class Calc {
     public static int run(String exp) {
 
-
-
         String[] bits = null;
         bits = exp.split(" ");
         int [] ints = new int [bits.length];
@@ -19,6 +17,9 @@ public class Calc {
             }
             else if(bits[i].equals("+")){
                 result += ints[i+1];
+            }
+            else if(bits[i].equals("*")){
+                result *= ints[i+1];
             }
             else{
                 throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
