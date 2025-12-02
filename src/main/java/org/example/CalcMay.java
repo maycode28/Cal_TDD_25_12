@@ -6,7 +6,18 @@ import java.util.List;
 public class CalcMay {
     public static int run(String exp) {
 
+        if (!exp.contains(" ")) {
+            if (exp.contains("(")) {
+                exp = exp.replace("(", "");
+                exp = exp.replace(")", "");
+            }
+            return Integer.parseInt(exp);
+        }
+        boolean needToParen = exp.contains(")");
         exp = exp.replaceAll("- ", "+ -");
+        if (needToParen) {
+            return run(removeParen(exp));
+        }
         String[] bits = null;
         bits = exp.split(" ");
         List bitsList = new ArrayList();
@@ -41,6 +52,23 @@ public class CalcMay {
         }
 
         return result;
+    }
+    static String removeParen(String original) {
+        String[] result = new String[3];
+        int indexOpen = 0;
+        int indexClose = 0;
+        for(int i= 0; i<original.length();i++){
+            if (original.charAt(i)=='('){
+                indexOpen = i;
+            }
+        }
+        indexClose = original.indexOf(')', indexOpen);
+        result[0] = original.substring(0, indexOpen);
+        result[1] = original.substring(indexOpen + 1, indexClose);
+        result[2] = original.substring(indexClose + 1, original.length());
+        result[1] = ""+Calc.run(result[1]);
+        String newExp = result[0]+result[1]+result[2];
+        return newExp;
     }
 
 

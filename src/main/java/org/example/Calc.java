@@ -8,6 +8,10 @@ public class Calc {
     public static int run(String exp) {
 
         if (!exp.contains(" ")) {
+            if (exp.contains("(")) {
+                exp = exp.replace("(", "");
+                exp = exp.replace(")", "");
+            }
             return Integer.parseInt(exp);
         }
 
@@ -61,8 +65,14 @@ public class Calc {
     }
     static String removeParen(String original) {
         String[] result = new String[3];
-        int indexOpen = original.indexOf("(");
-        int indexClose = original.lastIndexOf(")");
+        int indexOpen = 0;
+        int indexClose = 0;
+        for(int i= 0; i<original.length();i++){
+            if (original.charAt(i)=='('){
+                indexOpen = i;
+            }
+        }
+        indexClose = original.indexOf(')', indexOpen);
         result[0] = original.substring(0, indexOpen);
         result[1] = original.substring(indexOpen + 1, indexClose);
         result[2] = original.substring(indexClose + 1, original.length());
