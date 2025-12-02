@@ -15,49 +15,12 @@ public class Calc {
         boolean needToMulti = exp.contains("*");
         boolean needToPlus = exp.contains("+");
         boolean needToCompound = needToPlus && needToMulti;
-        boolean needToParenPlus = exp.contains(") +");
-        boolean needToParenMulti = exp.contains(") *");
+
         boolean needToParen = exp.contains(")");
 
 
-        if (needToParenMulti){
-
-            String[] bits = exp.split("\\) \\* ");
-            String newExp = "";
-            for (int i = 0; i < bits.length; i++) {
-                bits[i] = bits[i].replace("(", "");
-                bits[i] = bits[i].replace(")", "");
-                int result = Calc.run(bits[i]);
-                newExp += result;
-                if (i < bits.length - 1) {
-                    newExp += " * ";
-                }
-
-            }
-            return run(newExp);
-
-        }
-
-        if (needToParenPlus){
-
-            String[] bits = exp.split("\\) \\+ ");
-            String newExp = "";
-            for (int i = 0; i < bits.length; i++) {
-                bits[i] = bits[i].replace("(", "");
-                bits[i] = bits[i].replace(")", "");
-                int result = Calc.run(bits[i]);
-                newExp += result;
-                if (i < bits.length - 1) {
-                    newExp += " + ";
-                }
-
-            }
-            return run(newExp);
-
-        }
         if(needToParen){
-            exp = exp.replace("(", "");
-            exp = exp.replace(")", "");
+            return run(removeParen(exp));
         }
 
         if (needToCompound) {
@@ -95,6 +58,17 @@ public class Calc {
 
 
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
+    }
+    static String removeParen(String original) {
+        String[] result = new String[3];
+        int indexOpen = original.indexOf("(");
+        int indexClose = original.lastIndexOf(")");
+        result[0] = original.substring(0, indexOpen);
+        result[1] = original.substring(indexOpen + 1, indexClose);
+        result[2] = original.substring(indexClose + 1, original.length());
+        result[1] = ""+Calc.run(result[1]);
+        String newExp = result[0]+result[1]+result[2];
+        return newExp;
     }
 
 
