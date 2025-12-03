@@ -18,6 +18,7 @@ public class CalcMay {
         if (needToParen) {
             return run(removeParen(exp));
         }
+
         String[] bits = null;
         bits = exp.split(" ");
         List bitsList = new ArrayList();
